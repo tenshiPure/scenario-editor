@@ -1,0 +1,44 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/03 ryo
+" ASP plugin
+"
+" see => 
+"---------------------------------
+
+command! -nargs=? ASP call ASPFunctionCall(<f-args>)
+
+function! ASPFunctionCall(...)
+	let inpath = GetInPath(a:000)
+	let outpath = GetOutPath()
+
+	call WindowOpen(inpath, outpath)
+endfunction
+
+function! GetInPath(args)
+	echo a:args
+	if a:args == []
+		return '/vagrant/command/in.txt'
+	else
+		return a:args[0]
+	endif
+endfunction
+
+function! GetOutPath()
+	return '/vagrant/command/out.txt'
+endfunction
+
+function! WindowOpen(inpath, outpath)
+python << EOM
+import vim
+
+inpath = vim.eval('a:inpath')
+outpath = vim.eval('a:outpath')
+
+vim.command('tabedit %s' % inpath)
+
+vim.command('set splitright')
+vim.command('vsplit ' + outpath)
+EOM
+endfunction
