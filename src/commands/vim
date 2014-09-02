@@ -1,0 +1,11 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" command configures
+"
+" see => :tab h user-command
+"---------------------------------
+
+" reload scenario-editor's configure files
+command! Reload source $rc

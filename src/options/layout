@@ -1,0 +1,25 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" option configures
+"
+" see => :tab h autocmd
+"---------------------------------
+
+" show line num
+set number
+
+" number of spaces that a Tab
+set tabstop=4
+
+" number of spaces to use for indent
+set shiftwidth=4
+
+" highlight at search
+set hlsearch
+
+" not generate unnecessary files
+set noswapfile
+set nobackup
+set viminfo=

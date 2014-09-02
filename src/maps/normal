@@ -1,0 +1,35 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" map configures
+"
+" see => :tab h map.txt
+"---------------------------------
+
+" highlight off
+nnoremap <silent><ESC><ESC> :noh<CR>
+
+" jump
+nnoremap <S-k> 10<UP>
+nnoremap <S-j> 10<DOWN>
+nnoremap <S-h> 10<LEFT>
+nnoremap <S-l> 10<RIGHT>
+
+" redo
+nnoremap <S-u> <C-r>
+
+" Scrolling relative to cursor 
+nnoremap , zz
+nnoremap zj zt
+nnoremap zk zb
+
+" highlight under cursor word
+nnoremap * :let pos = getpos('.')<CR>*:call setpos('.', pos)<CR>
+
+" history search
+nnoremap <C-p> :<UP>
+
+" tab switch
+nnoremap gl gt
+nnoremap gh gT

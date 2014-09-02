@@ -1,0 +1,11 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" hook commands of any event
+"
+" see => :tab h autocmd-intro
+"---------------------------------
+
+" not wrap automatically
+autocmd VimEnter * set nowrap

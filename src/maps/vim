@@ -1,0 +1,11 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" map configures
+"
+" see => :tab h map.txt
+"---------------------------------
+
+" reload scenario-editor's configure files
+nnoremap ® :source $rc<CR>

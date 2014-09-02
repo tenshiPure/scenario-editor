@@ -1,0 +1,23 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/02 ryo
+" map configures
+"
+" see => :tab h map.txt
+"---------------------------------
+
+" like emacs (move)
+inoremap <C-p> <UP>
+inoremap <C-n> <DOWN>
+inoremap <C-b> <LEFT>
+inoremap <C-f> <RIGHT>
+inoremap <C-a> <HOME>
+inoremap <C-e> <END>
+
+" like emacs (edit)
+inoremap <C-h> <BS>
+inoremap <C-d> <Del>
+inoremap <C-w> <C-w>
+inoremap <C-k> <C-o><S-d>
+inoremap <C-u> <C-u>
