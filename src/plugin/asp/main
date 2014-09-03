@@ -7,26 +7,27 @@
 " see => 
 "---------------------------------
 
+let $ASPFunctionCall = '/vagrant/src/plugin/asp/command/ASPFunctionCall'
+
 command! -nargs=? ASP call ASPFunctionCall(<f-args>)
 
 function! ASPFunctionCall(...)
-	let inpath = GetInPath(a:000)
-	let outpath = GetOutPath()
+	let g:inpath = GetInPath(a:000)
+	let g:outpath = GetOutPath()
 
-	call WindowOpen(inpath, outpath)
+	call WindowOpen(g:inpath, g:outpath)
 endfunction
 
 function! GetInPath(args)
-	echo a:args
 	if a:args == []
-		return '/vagrant/command/in.txt'
+		return '/vagrant/src/plugin/asp/command/in.txt'
 	else
 		return a:args[0]
 	endif
 endfunction
 
 function! GetOutPath()
-	return '/vagrant/command/out.txt'
+	return '/vagrant/src/plugin/asp/command/out.txt'
 endfunction
 
 function! WindowOpen(inpath, outpath)
@@ -41,4 +42,24 @@ vim.command('tabedit %s' % inpath)
 vim.command('set splitright')
 vim.command('vsplit ' + outpath)
 EOM
+endfunction
+
+function! SetOut(inpath, outpath)
+python << EOM
+import os
+import vim
+
+ASPFunctionCall = vim.eval('$ASPFunctionCall')
+inpath = vim.eval('a:inpath')
+outpath = vim.eval('a:outpath')
+
+os.system('python /vagrant/src/plugin/asp/command/__ASPFunctionCall.py %(ASPFunctionCall)s %(inpath)s %(outpath)s' % locals())
+EOM
+endfunction
+
+
+command! Run call Run()
+
+function! Run()
+	call SetOut(g:inpath, g:outpath)
 endfunction

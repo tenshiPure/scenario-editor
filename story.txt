@@ -44,12 +44,13 @@
 
 - コマンド
 	- ASP
-		# ウィンドウ構成
+		+ ウィンドウ構成
 		+ ダミーコマンド
 	- ReadIn
 	- WriteIn
 	- WriteOut
-	- Run
+	+ Run
+	- ReRun
 
 - ファイル
 	- タブ
