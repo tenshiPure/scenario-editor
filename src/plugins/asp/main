@@ -1,0 +1,74 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/03 ryo
+" ASP plugin
+"
+" see => 
+"---------------------------------
+
+let $ASPFunctionCall = '/vagrant/src/plugins/asp/command/ASPFunctionCall'
+let $__ASPFunctionCall = '/vagrant/src/plugins/asp/command/__ASPFunctionCall.py'
+
+command! -nargs=+ ASP call ASPFunctionCall(<f-args>)
+
+function! ASPFunctionCall(...)
+	let g:scenarioname = GetScenarioName(a:000)
+	let g:inpath = GetInPath(a:0, a:000)
+	let g:outpath = GetOutPath()
+
+	call WindowOpen(g:inpath, g:outpath)
+endfunction
+
+function! GetScenarioName(args)
+	return a:args[0]
+endfunction
+
+function! GetInPath(argn, args)
+	if a:argn == 2
+		return a:args[1]
+	else
+		return '/vagrant/src/plugins/asp/command/in.txt'
+	endif
+endfunction
+
+function! GetOutPath()
+	return '/vagrant/src/plugins/asp/command/out.txt'
+endfunction
+
+function! WindowOpen(inpath, outpath)
+python << EOM
+import vim
+
+inpath = vim.eval('a:inpath')
+outpath = vim.eval('a:outpath')
+
+vim.command('tabedit %s' % inpath)
+
+vim.command('set splitright')
+vim.command('vsplit ' + outpath)
+EOM
+endfunction
+
+function! Execute(scenario, inpath, outpath)
+python << EOM
+import os
+import vim
+
+ASPFunctionCall = vim.eval('$ASPFunctionCall')
+__ASPFunctionCall = vim.eval('$__ASPFunctionCall')
+scenario = vim.eval('a:scenario')
+inpath = vim.eval('a:inpath')
+outpath = vim.eval('a:outpath')
+
+os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenario)s %(inpath)s %(outpath)s' % locals())
+EOM
+endfunction
+
+
+command! Run call Run()
+
+function! Run()
+	call Execute(g:scenarioname, g:inpath, g:outpath)
+	execute 'e!'
+endfunction

@@ -1,6 +1,8 @@
+hoge
 output...
 out-inputdata
 out-hoge
 out-fuga
 out-piyo
-out-tenshi
+out-foo
+out-bar

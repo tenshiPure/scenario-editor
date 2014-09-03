@@ -2,4 +2,5 @@ inputdata
 hoge
 fuga
 piyo
-tenshi
+foo
+bar
