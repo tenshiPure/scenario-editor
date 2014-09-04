@@ -68,6 +68,7 @@ function! Run()
 	call WindowSwitch(g:outbufnum)
 	call Execute()
 	execute 'e!'
+	execute 'w!'
 endfunction
 
 function! Execute()
@@ -83,4 +84,18 @@ outpath = vim.eval('g:outpath')
 
 os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenarioname)s %(inpath)s %(outpath)s' % locals())
 EOM
+endfunction
+
+
+
+command! -nargs=1 -complete=file WriteIn call WriteIn(<f-args>)
+
+function! WriteIn(path)
+	execute '!cp ' . g:inpath . ' ' . a:path
+endfunction
+
+command! -nargs=1 -complete=file WriteOut call WriteOut(<f-args>)
+
+function! WriteOut(path)
+	execute '!cp ' . g:outpath . ' ' . a:path
 endfunction
