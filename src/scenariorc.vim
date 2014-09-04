@@ -24,7 +24,6 @@ let $variables    = '/vagrant/src/variables'
 " syntax file's path
 let $syntax    = '/vagrant/src/syntax/scenario.vim'
 
-
 " import fub configure files
 source $autocommands/layout
 source $commands/vim
@@ -34,3 +33,6 @@ source $maps/insert
 source $maps/visual
 source $options/layout
 source $variables/paths
+
+" directory path that development root (= scenario sources directory)
+let $devroot = '/vagrant/testdata'
