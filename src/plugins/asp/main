@@ -99,3 +99,24 @@ command! -nargs=1 -complete=file WriteOut call WriteOut(<f-args>)
 function! WriteOut(path)
 	execute '!cp ' . g:outpath . ' ' . a:path
 endfunction
+
+command! -nargs=1 -complete=file ReadIn call ReadIn(<f-args>)
+
+function! ReadIn(path)
+	execute 'bdelete! ' . g:inbufnum
+
+	" func
+	" tab
+	execute 'vsplit ' . a:path
+	let g:inbufnum = bufnr('')
+endfunction
+
+command! NewIn call NewIn()
+
+function! NewIn()
+	execute 'bdelete! ' . g:inbufnum
+
+	" autocmdで保存
+	execute 'vsplit ' . $inpath
+	let g:inbufnum = bufnr('')
+endfunction
