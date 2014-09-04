@@ -7,17 +7,20 @@
 " see => 
 "---------------------------------
 
-let $ASPFunctionCall = '/vagrant/src/plugins/asp/command/ASPFunctionCall'
-let $__ASPFunctionCall = '/vagrant/src/plugins/asp/command/__ASPFunctionCall.py'
+let $ASPFunctionCall   = $plugins_asp . '/command/ASPFunctionCall'
+let $__ASPFunctionCall = $plugins_asp . '/command/__ASPFunctionCall.py'
+let $inpath            = $plugins_asp . '/tmpfiles/in'
+let $outpath           = $plugins_asp . '/tmpfiles/out'
 
-command! -nargs=+ ASP call ASPFunctionCall(<f-args>)
+"<args>?
+command! -nargs=+ -complete=file ASP call ASPFunctionCall(<f-args>)
 
 function! ASPFunctionCall(...)
 	let g:scenarioname = GetScenarioName(a:000)
 	let g:inpath = GetInPath(a:0, a:000)
 	let g:outpath = GetOutPath()
 
-	call WindowOpen(g:inpath, g:outpath)
+	call WindowOpen()
 endfunction
 
 function! GetScenarioName(args)
@@ -28,47 +31,56 @@ function! GetInPath(argn, args)
 	if a:argn == 2
 		return a:args[1]
 	else
-		return '/vagrant/src/plugins/asp/command/in.txt'
+		return $inpath
 	endif
 endfunction
 
 function! GetOutPath()
-	return '/vagrant/src/plugins/asp/command/out.txt'
+	return $outpath
 endfunction
 
-function! WindowOpen(inpath, outpath)
-python << EOM
-import vim
+function! WindowOpen()
+	execute 'tabedit ' . g:outpath
+	let g:outbufnum = bufnr('')
 
-inpath = vim.eval('a:inpath')
-outpath = vim.eval('a:outpath')
+	execute 'vsplit ' . g:inpath
+	let g:inbufnum = bufnr('')
 
-vim.command('tabedit %s' % inpath)
-
-vim.command('set splitright')
-vim.command('vsplit ' + outpath)
-EOM
+	call BufClean(g:outbufnum)
+	call WindowSwitch(g:inbufnum)
 endfunction
 
-function! Execute(scenario, inpath, outpath)
+function! WindowSwitch(bufnum)
+	let winnum = bufwinnr(a:bufnum)
+	execute winnum . 'wincmd w'
+endfunction
+
+function! BufClean(bufnum)
+	call WindowSwitch(a:bufnum)
+	execute ':normal ggdG'
+endfunction
+
+
+
+command! Run call Run()
+
+function! Run()
+	call WindowSwitch(g:outbufnum)
+	call Execute()
+	execute 'e!'
+endfunction
+
+function! Execute()
 python << EOM
 import os
 import vim
 
 ASPFunctionCall = vim.eval('$ASPFunctionCall')
 __ASPFunctionCall = vim.eval('$__ASPFunctionCall')
-scenario = vim.eval('a:scenario')
-inpath = vim.eval('a:inpath')
-outpath = vim.eval('a:outpath')
+scenarioname = vim.eval('g:scenarioname')
+inpath = vim.eval('g:inpath')
+outpath = vim.eval('g:outpath')
 
-os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenario)s %(inpath)s %(outpath)s' % locals())
+os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenarioname)s %(inpath)s %(outpath)s' % locals())
 EOM
-endfunction
-
-
-command! Run call Run()
-
-function! Run()
-	call Execute(g:scenarioname, g:inpath, g:outpath)
-	execute 'e!'
 endfunction

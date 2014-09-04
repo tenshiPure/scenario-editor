@@ -25,10 +25,11 @@ let $variables    = '/vagrant/src/variables'
 let $syntax    = '/vagrant/src/syntax/scenario.vim'
 
 " plugins directory's path
-let $plugins = '/vagrant/src/plugins'
+let $plugins     = '/vagrant/src/plugins'
+let $plugins_asp = '/vagrant/src/plugins/asp'
 
 " import plugin main files
-source $plugins/asp/main
+source $plugins_asp/main
 
 " import fub configure files
 source $autocommands/layout
