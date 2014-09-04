@@ -29,7 +29,7 @@ let $plugins     = '/vagrant/src/plugins'
 let $plugins_asp = '/vagrant/src/plugins/asp'
 
 " import plugin main files
-source $plugins_asp/main
+source $plugins_asp/src/main
 
 " import fub configure files
 source $autocommands/layout

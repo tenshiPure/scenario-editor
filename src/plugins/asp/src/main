@@ -7,26 +7,34 @@
 " see => 
 "---------------------------------
 
+" asp plugin modules
+source $plugins_asp/src/command
+source $plugins_asp/src/file
+source $plugins_asp/src/layout
+
+" commands path
 let $ASPFunctionCall   = $plugins_asp . '/command/ASPFunctionCall'
 let $__ASPFunctionCall = $plugins_asp . '/command/__ASPFunctionCall.py'
+
+" tmpfiles path
 let $inpath            = $plugins_asp . '/tmpfiles/in'
 let $outpath           = $plugins_asp . '/tmpfiles/out'
 
-"<args>?
-command! -nargs=+ -complete=file ASP call ASPFunctionCall(<f-args>)
-
-function! ASPFunctionCall(...)
+" set some path and open ASP windows
+function! BootstrapASP(...)
 	let g:scenarioname = GetScenarioName(a:000)
 	let g:inpath = GetInPath(a:0, a:000)
 	let g:outpath = GetOutPath()
 
-	call WindowOpen()
+	call OpenASPWindow()
 endfunction
 
+" get scenario name from arguments
 function! GetScenarioName(args)
 	return a:args[0]
 endfunction
 
+" get in-param file path from arguments
 function! GetInPath(argn, args)
 	if a:argn == 2
 		return a:args[1]
@@ -35,35 +43,12 @@ function! GetInPath(argn, args)
 	endif
 endfunction
 
+" get out-param file path from arguments
 function! GetOutPath()
 	return $outpath
 endfunction
 
-function! WindowOpen()
-	execute 'tabedit ' . g:outpath
-	let g:outbufnum = bufnr('')
-
-	execute 'vsplit ' . g:inpath
-	let g:inbufnum = bufnr('')
-
-	call BufClean(g:outbufnum)
-	call WindowSwitch(g:inbufnum)
-endfunction
-
-function! WindowSwitch(bufnum)
-	let winnum = bufwinnr(a:bufnum)
-	execute winnum . 'wincmd w'
-endfunction
-
-function! BufClean(bufnum)
-	call WindowSwitch(a:bufnum)
-	execute ':normal ggdG'
-endfunction
-
-
-
-command! Run call Run()
-
+" execute ASPFunctionCall and execute reload, write
 function! Run()
 	call WindowSwitch(g:outbufnum)
 	call Execute()
@@ -71,6 +56,7 @@ function! Run()
 	execute 'w!'
 endfunction
 
+" execute ASPFunctionCall
 function! Execute()
 python << EOM
 import os
@@ -86,37 +72,7 @@ os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenarioname)s %(i
 EOM
 endfunction
 
-
-
-command! -nargs=1 -complete=file WriteIn call WriteIn(<f-args>)
-
-function! WriteIn(path)
-	execute '!cp ' . g:inpath . ' ' . a:path
-endfunction
-
-command! -nargs=1 -complete=file WriteOut call WriteOut(<f-args>)
-
-function! WriteOut(path)
-	execute '!cp ' . g:outpath . ' ' . a:path
-endfunction
-
-command! -nargs=1 -complete=file ReadIn call ReadIn(<f-args>)
-
-function! ReadIn(path)
-	execute 'bdelete! ' . g:inbufnum
-
-	" func
-	" tab
-	execute 'vsplit ' . a:path
-	let g:inbufnum = bufnr('')
-endfunction
-
-command! NewIn call NewIn()
-
-function! NewIn()
-	execute 'bdelete! ' . g:inbufnum
-
-	" autocmdで保存
-	execute 'vsplit ' . $inpath
-	let g:inbufnum = bufnr('')
+" update in-param file path
+function! UpdateInPath(path)
+	let g:inpath = a:path
 endfunction

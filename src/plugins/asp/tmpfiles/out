@@ -1,8 +1,5 @@
-hoge
+tenshi
 output...
-out-inputdata
-out-hoge
-out-fuga
-out-piyo
-out-foo
-out-bar
+out-print 'hoge'
+out-print 'fuga'
+out-print 'piyo'
