@@ -17,8 +17,12 @@ let $ASPFunctionCall   = $plugins_asp . '/command/ASPFunctionCall'
 let $__ASPFunctionCall = $plugins_asp . '/command/__ASPFunctionCall.py'
 
 " tmpfiles path
-let $inpath            = $plugins_asp . '/tmpfiles/in'
-let $outpath           = $plugins_asp . '/tmpfiles/out'
+let $inpath            = $plugins_asp . '/tmpfiles/in.asptmpfile'
+let $outpath           = $plugins_asp . '/tmpfiles/out.asptmpfile'
+
+
+" all lines delete at *.asptmpfile open
+autocmd! BufAdd *.asptmpfile :call BufferInit()
 
 " set some path and open ASP windows
 function! BootstrapASP(...)
@@ -50,6 +54,8 @@ endfunction
 
 " execute ASPFunctionCall and execute reload, write
 function! Run()
+	call WindowSwitch(g:inbufnum)
+	execute 'w!'
 	call WindowSwitch(g:outbufnum)
 	call Execute()
 	execute 'e!'

@@ -40,8 +40,8 @@ function! Read(path)
 	call OpenIn()
 endfunction
 
-" clean buffer
-function! BufClean(bufnum)
-	call WindowSwitch(a:bufnum)
+" all lines delete
+function! BufferInit()
 	execute ':normal ggdG'
+	execute ':w!'
 endfunction
