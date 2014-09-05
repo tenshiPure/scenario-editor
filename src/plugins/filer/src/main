@@ -1,0 +1,20 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/05 ryo
+" Filer plugin
+"
+" see => 
+"---------------------------------
+
+nnoremap ß :call Toggle()<CR>
+
+function! Toggle()
+	if $isOpen == 0
+		execute ':topleft 50 vsplit /vagrant/src/plugins/filer/workfiles/tree.filerworkfile'
+		let $isOpen = 1
+	else
+		execute ':bdelete!'
+		let $isOpen = 0
+	endif
+endfunction

@@ -1,0 +1,47 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/04 ryo
+" ASP plugin function about file
+"
+" see => 
+"---------------------------------
+
+" write in-param file to path
+function! WriteIn(path)
+	call Write(g:inbufnum, a:path)
+endfunction
+
+" write out-param file to path
+function! WriteOut(path)
+	call Write(g:outbufnum, a:path)
+endfunction
+
+" write file
+function! Write(bufnum, path)
+	call WindowSwitch(a:bufnum)
+	execute 'write! ' . a:path
+endfunction
+
+" read in-param file from path (destruct current in-param change)
+function! ReadIn(path)
+	call Read(a:path)
+endfunction
+
+" create new in-param file
+function! NewIn()
+	call Read($inpath)
+endfunction
+
+" close buffer and open file
+function! Read(path)
+	call CloseIn()
+	call UpdateInPath(a:path)
+	call OpenIn()
+endfunction
+
+" all lines delete
+function! BufferInit()
+	execute ':normal ggdG'
+	execute ':w!'
+endfunction
