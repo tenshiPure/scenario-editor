@@ -2,7 +2,7 @@
 " vim:set ft=vim:
 "
 " 2014/09/02 ryo
-" hook commands of any event
+" hook commands of any event about layout
 "
 " see => :tab h autocmd-intro
 "---------------------------------

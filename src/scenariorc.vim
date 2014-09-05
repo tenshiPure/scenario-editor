@@ -34,6 +34,7 @@ source $plugins_asp/src/main
 source $plugins_filer/src/main
 
 " import fub configure files
+source $autocommands/encoding
 source $autocommands/layout
 source $commands/vim
 source $maps/vim

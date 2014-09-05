@@ -1,0 +1,17 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/05 ryo
+" hook commands of any event about encoding
+"
+" see => :tab h autocmd-intro
+"        :tab h encoding
+"        :tab h fileencoding
+"---------------------------------
+
+" tmp...
+augroup encoding
+	autocmd!
+	autocmd VimEnter * :set encoding=utf-8
+	autocmd BufEnter *.xml :e ++enc=euc-jp | :syn on
+augroup END

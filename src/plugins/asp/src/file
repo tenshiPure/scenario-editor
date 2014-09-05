@@ -42,6 +42,8 @@ endfunction
 
 " all lines delete
 function! BufferInit()
+	echomsg 'here'
+	return
 	execute ':normal ggdG'
 	execute ':w!'
 endfunction

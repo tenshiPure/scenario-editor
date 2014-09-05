@@ -7,7 +7,11 @@
 " see => 
 "---------------------------------
 
-autocmd! VimEnter * :call Toggle()
+augroup filer
+	autocmd!
+	autocmd VimEnter * :call Toggle()
+	autocmd VimEnter * :cd $devroot
+augroup END
 
 nnoremap ß :call Toggle()<CR>
 
@@ -16,6 +20,7 @@ function! Toggle()
 		execute ':topleft 50 vsplit /vagrant/src/plugins/filer/workfiles/tree.filerworkfile'
 		let $isOpen = 1
 	else
+		" focus
 		execute ':bdelete!'
 		let $isOpen = 0
 	endif
