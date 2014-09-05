@@ -1,0 +1,39 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/04 ryo
+" ASP plugin function about layout
+"
+" see => 
+"---------------------------------
+
+" open ASP Windows
+function! OpenASPWindow()
+	execute 'tabedit'
+	call OpenOut()
+	call OpenIn()
+	call WindowSwitch(g:inbufnum)
+endfunction
+
+" open in-param window
+function! OpenIn()
+	execute 'vsplit ' . g:inpath
+	let g:inbufnum = bufnr('')
+endfunction
+
+" open out-param window
+function! OpenOut()
+	execute 'edit ' . g:outpath
+	let g:outbufnum = bufnr('')
+endfunction
+
+" close in-param window
+function! CloseIn()
+	execute 'bdelete! ' . g:inbufnum
+endfunction
+
+" switch window by bufnum
+function! WindowSwitch(bufnum)
+	let winnum = bufwinnr(a:bufnum)
+	execute winnum . 'wincmd w'
+endfunction

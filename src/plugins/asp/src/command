@@ -1,0 +1,26 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/04 ryo
+" ASP plugin command define
+"
+" see => 
+"---------------------------------
+
+" start ASP
+command! -nargs=+ -complete=file ASP call BootstrapASP(<f-args>)
+
+" execute ASPFunctionCall
+command! Run call Run()
+
+" write in-param file to path
+command! -nargs=1 -complete=file WriteIn call WriteIn(<f-args>)
+
+" write out-param file to path
+command! -nargs=1 -complete=file WriteOut call WriteOut(<f-args>)
+
+" read in-param file from path (destruct current in-param change)
+command! -nargs=1 -complete=file ReadIn call ReadIn(<f-args>)
+
+" create new in-param file
+command! NewIn call NewIn()

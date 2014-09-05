@@ -1,0 +1,84 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/03 ryo
+" ASP plugin
+"
+" see => 
+"---------------------------------
+
+" asp plugin modules
+source $plugins_asp/src/command
+source $plugins_asp/src/file
+source $plugins_asp/src/layout
+
+" commands path
+let $ASPFunctionCall   = $plugins_asp . '/command/ASPFunctionCall'
+let $__ASPFunctionCall = $plugins_asp . '/command/__ASPFunctionCall.py'
+
+" tmpfiles path
+let $inpath            = $plugins_asp . '/tmpfiles/in.asptmpfile'
+let $outpath           = $plugins_asp . '/tmpfiles/out.asptmpfile'
+
+
+" all lines delete at *.asptmpfile open
+autocmd! BufAdd *.asptmpfile :call BufferInit()
+
+" set some path and open ASP windows
+function! BootstrapASP(...)
+	let g:scenarioname = GetScenarioName(a:000)
+	let g:inpath = GetInPath(a:0, a:000)
+	let g:outpath = GetOutPath()
+
+	call OpenASPWindow()
+endfunction
+
+" get scenario name from arguments
+function! GetScenarioName(args)
+	return a:args[0]
+endfunction
+
+" get in-param file path from arguments
+function! GetInPath(argn, args)
+	if a:argn == 2
+		return a:args[1]
+	else
+		return $inpath
+	endif
+endfunction
+
+" get out-param file path from arguments
+function! GetOutPath()
+	return $outpath
+endfunction
+
+" execute ASPFunctionCall and execute reload, write
+function! Run()
+	call WindowSwitch(g:inbufnum)
+	execute 'w!'
+	call WindowSwitch(g:outbufnum)
+	call Execute()
+	execute 'e!'
+	execute 'w!'
+endfunction
+
+" execute ASPFunctionCall
+function! Execute()
+python << EOM
+import os
+import vim
+
+ASPFunctionCall = vim.eval('$ASPFunctionCall')
+__ASPFunctionCall = vim.eval('$__ASPFunctionCall')
+scenarioname = vim.eval('g:scenarioname')
+inpath = vim.eval('g:inpath')
+outpath = vim.eval('g:outpath')
+
+os.system('python %(__ASPFunctionCall)s %(ASPFunctionCall)s %(scenarioname)s %(inpath)s %(outpath)s' % locals())
+EOM
+endfunction
+
+" update in-param file path
+function! UpdateInPath(path)
+	let g:inpath = a:path
+endfunction

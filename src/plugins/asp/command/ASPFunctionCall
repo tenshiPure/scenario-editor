@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+import sys
+
+scenario = sys.argv[1]
+
+print scenario
+print 'output...'
+for line in sys.stdin.readlines():
+	print 'out-%s' % line.strip()
