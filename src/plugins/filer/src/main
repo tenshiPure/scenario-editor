@@ -7,6 +7,8 @@
 " see => 
 "---------------------------------
 
+autocmd! VimEnter * :call Toggle()
+
 nnoremap ß :call Toggle()<CR>
 
 function! Toggle()
