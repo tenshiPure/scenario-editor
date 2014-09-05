@@ -1,0 +1,13 @@
+" vim:set ft=vim:
+
+function! FlexibleFrank()
+python <<EOM
+
+import vim
+
+root = vim.eval('$devroot')
+frank = Frank(root)
+frank.output()
+
+EOM
+endfunction
