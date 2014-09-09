@@ -21,4 +21,12 @@ vim.command(':edit %s' % entry.path.value)
 EOM
 endfunction
 
+function! ActionReload()
+python <<EOM
+root = vim.eval('$devroot')
+frank = Frank(root)
+frank.output()
+EOM
+endfunction
+
 nnoremap √ :qa!<CR>
