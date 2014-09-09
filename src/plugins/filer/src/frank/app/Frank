@@ -17,18 +17,14 @@ class Frank:
 	def output(self):
 		self.buffer.output(self.node.getOutputs([]))
 
-	def reNumbering(self):
-		Num.init()
-		self.node.reNumbering()
-
 	def _getCursorLineNum(self):
-		cursorPos = Cursor.getCurrentLineNum()
+		return int(vim.eval('getpos(".")')[1])
 
-		return cursorPos + 1
+	def findByCursor(self):
+		n = self._getCursorLineNum()
 
-	def findOneByCursor(self):
-		num = self._getCursorLineNum()
-
-		return [e for e in self.node if e.num.isTarget(num)][0]
+		for i, e in enumerate(self.node):
+			if i == n:
+				return e
 
 EOM

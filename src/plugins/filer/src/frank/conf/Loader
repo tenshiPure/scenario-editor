@@ -13,13 +13,12 @@ let $_frank_conf = $_frank_src . '/conf'
 let $_frank_workspace = $frank . '/workspace'
 
 source $_frank_app/FlexibleFrank
-source $_frank_app/Dispatcher
+"source $_frank_app/Action
 source $_frank_app/Frank
 source $_frank_app/Exception
 source $_frank_app/Annotations
 
 source $_frank_vim/Buffer
-source $_frank_vim/Cursor
 
 source $_frank_conf/Key
 

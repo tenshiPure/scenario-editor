@@ -11,3 +11,14 @@ frank.output()
 
 EOM
 endfunction
+
+function! ActionEnter()
+python <<EOM
+entry = frank.findByCursor()
+
+vim.command('execute "wincmd w"')
+vim.command(':edit %s' % entry.path.value)
+EOM
+endfunction
+
+nnoremap √ :qa!<CR>
