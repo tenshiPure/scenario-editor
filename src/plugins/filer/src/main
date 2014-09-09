@@ -7,11 +7,9 @@
 " see => 
 "---------------------------------
 
-source $plugins_filer/src/file
-
 augroup filer
 	autocmd!
-	autocmd VimEnter * :call Toggle() | :call FlexibleFrank()
+	autocmd VimEnter * :call Toggle() | :call OutputNewTree()
 	autocmd VimEnter * :cd $devroot
 augroup END
 
@@ -28,3 +26,43 @@ function! Toggle()
 		let $isOpen = 0
 	endif
 endfunction
+
+
+
+
+
+source $plugins_filer/src/tree/conf/Loader
+
+" ???
+augroup filer_frank_tmp
+	autocmd!
+	autocmd BufEnter *.filerworkfile call KeyMapping()
+	autocmd BufEnter *.filerworkfile set filetype=filerworkfile
+	autocmd BufEnter *.filerworkfile set syntax=filerworkfile
+augroup END
+
+function! ActionEnter()
+python <<EOM
+entry = tree.findByCursor()
+
+if entry.type.isFile():
+	vim.command('execute "wincmd w"')
+	vim.command(':edit %s' % entry.path.value)
+EOM
+endfunction
+
+function! ActionReload()
+	call OutputNewTree()
+endfunction
+
+function! OutputNewTree()
+python <<EOM
+import vim
+
+root = vim.eval('$devroot')
+tree = Tree(root)
+tree.output()
+EOM
+endfunction
+
+nnoremap √ :qa!<CR>

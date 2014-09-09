@@ -1,0 +1,17 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/09 ryo
+" Filer plugin's loader
+"
+" see => 
+"---------------------------------
+
+source $plugins_filer/src/tree/Tree
+source $plugins_filer/src/tree/conf/Key
+source $plugins_filer/src/tree/entry/Entry
+source $plugins_filer/src/tree/entry/Directory
+source $plugins_filer/src/tree/entry/File
+source $plugins_filer/src/tree/entry/fundamental/Path
+source $plugins_filer/src/tree/entry/fundamental/Depth
+source $plugins_filer/src/tree/entry/fundamental/Type

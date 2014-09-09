@@ -9,6 +9,6 @@ class File(Entry):
 		self.type = Type(Type.FILE)
 
 	def _createOutput(self):
-		return '%s %s%s%s' % (self.fold.getPartOfOutputAtFile(), self.depth.getPartOfOutput(), self.path.getPartOfOutput(), self.type.getPartOfOutputAtFile())
+		return '%s%s%s' % (self.depth.getPartOfOutput(), self.path.getPartOfOutput(), self.type.getPartOfOutputAtFile())
 
 EOM
