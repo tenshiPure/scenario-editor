@@ -11,7 +11,7 @@ source $plugins_filer/src/file
 
 augroup filer
 	autocmd!
-	autocmd VimEnter * :call Toggle()
+	autocmd VimEnter * :call Toggle() | :call FlexibleFrank()
 	autocmd VimEnter * :cd $devroot
 augroup END
 
@@ -23,6 +23,7 @@ function! Toggle()
 		let $isOpen = 1
 	else
 		" focus
+		execute ':write!'
 		execute ':bdelete!'
 		let $isOpen = 0
 	endif

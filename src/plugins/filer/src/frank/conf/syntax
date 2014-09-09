@@ -13,7 +13,7 @@ syntax match dir ".*\/$"
 " Only used when an item doesn't have highlighting yet
 hi def link dir Comment
 
-let b:current_syntax = "frank"
+let b:current_syntax = "filerworkfile"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
