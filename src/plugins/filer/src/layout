@@ -2,38 +2,72 @@
 " vim:set ft=vim:
 "
 " 2014/09/04 ryo
-" ASP plugin function about layout
+" Filer plugin function about layout
 "
 " see => 
 "---------------------------------
 
-" open ASP Windows
-function! OpenASPWindow()
-	execute 'tabedit'
-	call OpenOut()
-	call OpenIn()
-	call WindowSwitch(g:inbufnum)
+" open left side filer
+function! Open()
+	execute ':topleft 50 vsplit ' . $filerworkfile
+	let g:fileworkfilebufnum = bufnr('')
 endfunction
 
-" open in-param window
-function! OpenIn()
-	execute 'vsplit ' . g:inpath
-	let g:inbufnum = bufnr('')
+" close left side filer
+function! Close()
+	call FocusFiler()
+	execute ':bdelete!'
 endfunction
 
-" open out-param window
-function! OpenOut()
-	execute 'edit ' . g:outpath
-	let g:outbufnum = bufnr('')
+" focus filer
+function! FocusFiler()
+	call WindowSwitch(g:fileworkfilebufnum)
 endfunction
 
-" close in-param window
-function! CloseIn()
-	execute 'bdelete! ' . g:inbufnum
+" focus out filer
+function! FocusOutFiler()
+	call FocusFiler()
+	execute 'wincmd w'
 endfunction
 
 " switch window by bufnum
 function! WindowSwitch(bufnum)
 	let winnum = bufwinnr(a:bufnum)
 	execute winnum . 'wincmd w'
+endfunction
+
+" execute edit or tabedit
+function! Edit(path)
+	if IsDirectory(a:path)
+		echo 'directory is not editable.'
+		return
+	endif
+
+	call FocusOutFiler()
+
+	if IsBlankBuffer()
+		call __Edit(a:path)
+	else
+		call __TabEdit(a:path)
+	endif
+endfunction
+
+" check buffer name
+function! IsBlankBuffer()
+	return bufname('%') == ''
+endfunction
+
+" check entry type
+function! IsDirectory(path)
+	return a:path == '_directory_'
+endfunction
+
+" edit
+function! __Edit(path)
+		execute ':edit ' . a:path
+endfunction
+
+" tabedit
+function! __TabEdit(path)
+		execute ':tabedit ' . a:path
 endfunction

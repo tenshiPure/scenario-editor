@@ -7,47 +7,49 @@
 " see => 
 "---------------------------------
 
+source $plugins_filer/src/layout
+let $filerworkfile = $plugins_filer . '/src/plugins/filer/workfiles/tree.filerworkfile'
+let $fileworkfilebufnum = 0
+
 augroup filer
 	autocmd!
 	autocmd VimEnter * :call Toggle() | :call OutputNewTree()
 	autocmd VimEnter * :cd $devroot
+
+	autocmd BufEnter *.filerworkfile call KeyMapping()
+	autocmd BufEnter *.filerworkfile set filetype=filerworkfile
+	autocmd BufEnter *.filerworkfile set syntax=filerworkfile
 augroup END
 
 nnoremap ß :call Toggle()<CR>
 
 function! Toggle()
 	if $isOpen == 0
-		execute ':topleft 50 vsplit /vagrant/src/plugins/filer/workfiles/tree.filerworkfile'
+		call Open()
+		call OutputNewTree()
 		let $isOpen = 1
 	else
-		" focus
-		execute ':write!'
-		execute ':bdelete!'
+		call Close()
 		let $isOpen = 0
 	endif
 endfunction
 
-
-
-
-
 source $plugins_filer/src/tree/conf/Loader
 
-" ???
-augroup filer_frank_tmp
-	autocmd!
-	autocmd BufEnter *.filerworkfile call KeyMapping()
-	autocmd BufEnter *.filerworkfile set filetype=filerworkfile
-	autocmd BufEnter *.filerworkfile set syntax=filerworkfile
-augroup END
-
 function! ActionEnter()
+	let path = GetEntry()
+	call Edit(path)
+endfunction
+
+function! GetEntry()
 python <<EOM
 entry = tree.findByCursor()
 
 if entry.type.isFile():
-	vim.command('execute "wincmd w"')
-	vim.command(':edit %s' % entry.path.value)
+	vim.command('return "%s"' % entry.path.value)
+else:
+	vim.command('return "_directory_"')
+
 EOM
 endfunction
 
