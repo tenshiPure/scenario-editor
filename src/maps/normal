@@ -31,9 +31,5 @@ nnoremap * :let pos = getpos('.')<CR>*:call setpos('.', pos)<CR>
 nnoremap <C-p> :<UP>
 
 " tab switch
-nnoremap gl gt
-nnoremap gh gT
-
-" window switch
-nnoremap <Tab> :wincmd w<CR>
-nnoremap <S-Tab> :wincmd W<CR>
+nnoremap <Tab>   gt
+nnoremap <S-Tab> gT
