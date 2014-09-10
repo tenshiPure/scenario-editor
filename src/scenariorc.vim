@@ -28,8 +28,10 @@ let $syntax    = '/vagrant/src/syntax/scenario.vim'
 let $plugins       = '/vagrant/src/plugins'
 let $plugins_asp   = '/vagrant/src/plugins/asp'
 let $plugins_filer = '/vagrant/src/plugins/filer'
+let $plugins_help  = '/vagrant/src/plugins/help'
 
 " import plugin main files
+source $plugins_help/main
 source $plugins_asp/src/main
 source $plugins_filer/src/main
 

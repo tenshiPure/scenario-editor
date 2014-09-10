@@ -1,0 +1,29 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/10 ryo
+" Help plugin
+"
+" see => 
+"---------------------------------
+
+let $welcomefile = $plugins_help . '/welcomefile'
+command! Help call ShowWelcome()
+
+augroup _help
+	autocmd!
+	autocmd VimEnter * call ShowWelcome()
+	"autocmd BufLeave welcomefile bdelete! | edit
+augroup END
+
+function! ShowWelcome()
+	if IsBlankBuffer()
+		execute ':edit ' . $welcomefile
+	else
+		execute ':tabedit ' . $welcomefile
+	endif
+endfunction
+
+function! IsBlankBuffer()
+	return bufname('%') == ''
+endfunction
