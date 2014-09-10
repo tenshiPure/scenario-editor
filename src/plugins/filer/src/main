@@ -19,6 +19,8 @@ augroup filer
 	autocmd BufEnter *.filerworkfile call KeyMapping()
 	autocmd BufEnter *.filerworkfile set filetype=filerworkfile
 	autocmd BufEnter *.filerworkfile set syntax=filerworkfile
+
+	autocmd BufLeave *.filerworkfile call Close() | let $isOpen = 0
 augroup END
 
 nnoremap ß :call Toggle()<CR>
