@@ -30,10 +30,18 @@ let $plugins_asp   = '/vagrant/src/plugins/asp'
 let $plugins_filer = '/vagrant/src/plugins/filer'
 let $plugins_help  = '/vagrant/src/plugins/help'
 
-" import plugin main files
+" import help plugin main files
 source $plugins_help/main
+
+" import asp plugin main files
 source $plugins_asp/src/main
-source $plugins_filer/src/main
+
+" import filer plugin only enable python
+if has('python')
+	source $plugins_filer/src/main
+else
+	echo "filer plugin does't work this vim"
+endif
 
 " import fub configure files
 source $autocommands/encoding
