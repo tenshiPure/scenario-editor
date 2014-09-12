@@ -21,9 +21,6 @@ let $maps         = '/vagrant/src/maps'
 let $options      = '/vagrant/src/options'
 let $variables    = '/vagrant/src/variables'
 
-" syntax file's path
-let $syntax    = '/vagrant/src/syntax/scenario.vim'
-
 " plugins directory's path
 let $plugins       = '/vagrant/src/plugins'
 let $plugins_asp   = '/vagrant/src/plugins/asp'

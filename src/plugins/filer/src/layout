@@ -37,8 +37,8 @@ function! WindowSwitch(bufnum)
 endfunction
 
 " execute edit or tabedit
-function! Edit(path)
-	if IsDirectory(a:path)
+function! Edit(entry)
+	if a:entry.isDir
 		echo 'directory is not editable.'
 		return
 	endif
@@ -46,9 +46,9 @@ function! Edit(path)
 	call FocusOutFiler()
 
 	if IsBlankBuffer()
-		call __Edit(a:path)
+		call __Edit(a:entry.path)
 	else
-		call __TabEdit(a:path)
+		call __TabEdit(a:entry.path)
 	endif
 endfunction
 
