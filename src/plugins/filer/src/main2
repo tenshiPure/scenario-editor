@@ -9,7 +9,11 @@ let s:extensions = ['xml', 'map', 'cond', 'except', 'vali', 'vclass']
 function! Filer()
 	let command = CreateFindCommand()
 	let paths = GetPaths(command)
-	echo paths
+	let entries = Convert(paths)
+
+	for entry in entries
+		echo entry.output
+	endfor
 endfunction
 
 function! CreateFindCommand()
@@ -20,12 +24,29 @@ function! CreateFindCommand()
 	endfor
 	let types = ' -type d -or -type f'
 	return base . names . types
-
-	let paths = system(find)
-	echo paths
 endfunction
 
 function! GetPaths(command)
 	let paths = system(a:command)
 	return paths
+endfunction
+
+" ex) /vagrant/testdata/hogehogehoge/fugafugafuga/piyopiyopiyo
+"     |--                      path                        --|
+"     |--    base   --|
+"                       |--              tail              --|
+"                                                 |-- name --|
+function! Convert(paths)
+	let entries = []
+	for path in split(a:paths, "\n")
+		let baseLen = len($devroot)
+		let isDir = isdirectory(path)
+		let tail = path[baseLen + 1:]
+		let name = substitute(tail, '[^/]*/', '    ', 'g')
+		let slash = isDir ? '/' : ''
+
+		let entries = entries + [{'path' : path, 'isDir' : isDir, 'output' : name . slash}]
+	endfor
+
+	return entries[1:]
 endfunction
