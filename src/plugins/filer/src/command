@@ -1,26 +1,29 @@
 "---------------------------------
 " vim:set ft=vim:
 "
-" 2014/09/04 ryo
-" ASP plugin command define
+" 2014/09/12 ryo
+" Filer plugin command define
 "
 " see => 
 "---------------------------------
 
-" start ASP
-command! -nargs=+ -complete=file ASP call BootstrapASP(<f-args>)
+nnoremap √ :qa!<CR>
 
-" execute ASPFunctionCall
-command! Run call Run()
+nnoremap ß :call Toggle()<CR>
 
-" write in-param file to path
-command! -nargs=1 -complete=file WriteIn call WriteIn(<f-args>)
+" command on <CR> press
+function! ActionEnter()
+	let entry = GetEntry()
+	call Edit(entry)
+endfunction
 
-" write out-param file to path
-command! -nargs=1 -complete=file WriteOut call WriteOut(<f-args>)
+" get under cursor entry
+function! GetEntry()
+	let cursor = getpos('.')[1]
+	return g:entries[cursor - 1]
+endfunction
 
-" read in-param file from path (destruct current in-param change)
-command! -nargs=1 -complete=file ReadIn call ReadIn(<f-args>)
-
-" create new in-param file
-command! NewIn call NewIn()
+" command on <R> press
+function! ActionReload()
+	call OutputNewTree()
+endfunction

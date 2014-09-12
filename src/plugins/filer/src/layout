@@ -7,6 +7,33 @@
 " see => 
 "---------------------------------
 
+" create and output tree
+function! OutputNewTree()
+	let command = CreateFindCommand()
+	let paths = GetPaths(command)
+	let g:entries = Convert(paths)
+
+	execute ':normal ggdG'
+
+	for entry in g:entries
+		call append('$', entry.output)
+	endfor
+
+	execute ':normal ggdd'
+endfunction
+
+" side filer open/close
+function! Toggle()
+	if $isOpen == 0
+		call Open()
+		call OutputNewTree()
+		let $isOpen = 1
+	else
+		call Close()
+		let $isOpen = 0
+	endif
+endfunction
+
 " open left side filer
 function! Open()
 	execute ':topleft 50 vsplit ' . $filerworkfile

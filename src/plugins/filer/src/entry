@@ -1,0 +1,48 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/12 ryo
+" Filer plugin
+"
+" see => 
+"---------------------------------
+
+" ex) /vagrant/testdata/hogehogehoge/fugafugafuga/piyopiyopiyo
+"     |--                      path                        --|
+"     |--    base   --|
+"                       |--              tail              --|
+"                                                 |-- name --|
+function! Convert(paths)
+	let entries = []
+	for path in split(a:paths, "\n")
+		let baseLen = len($devroot)
+		let isDir = isdirectory(path)
+		let tail = path[baseLen + 1:]
+		let name = substitute(tail, '[^/]*/', '    ', 'g')
+		let slash = isDir ? '/' : ''
+
+		let entries = entries + [{'path' : path, 'isDir' : isDir, 'output' : name . slash}]
+	endfor
+
+	return entries[1:]
+endfunction
+
+let g:extensions = ['xml', 'map', 'cond', 'except', 'vali', 'vclass']
+
+" create find command based on extensions
+function! CreateFindCommand()
+	let base = 'find ' . $devroot
+	let names = ''
+	for extension in g:extensions
+		let names .= ' -name "*.' . extension . '" -or'
+	endfor
+	let type = ' -type d'
+
+	return base . names . type
+endfunction
+
+" execute find command
+function! GetPaths(command)
+	let paths = system(a:command)
+	return paths
+endfunction
