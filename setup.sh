@@ -1,3 +1,3 @@
 mv .vimrc .vimrcbup
 
-echo "alias scenario-editor='vi -u /vagrant/src/scenariorc.vim'" >> /home/vagrant/.zshrc
+echo "alias s='vi -u /vagrant/src/scenariorc.vim'" >> /home/vagrant/.zshrc
