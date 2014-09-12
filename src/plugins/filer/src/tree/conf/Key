@@ -1,6 +1,0 @@
-" vim:set ft=vim:
-
-function! KeyMapping()
-	nnoremap <buffer> R    :call ActionReload()<CR>
-	nnoremap <buffer> <CR> :call ActionEnter()<CR>
-endfunction

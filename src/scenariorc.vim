@@ -30,8 +30,7 @@ let $plugins_help  = '/vagrant/src/plugins/help'
 " import plugin main files
 source $plugins_help/main
 source $plugins_asp/src/main
-"source $plugins_filer/src/main
-source $plugins_filer/src/main2
+source $plugins_filer/src/main
 
 " import fub configure files
 source $autocommands/encoding
