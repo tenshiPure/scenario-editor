@@ -1,0 +1,11 @@
+"---------------------------------
+" vim:set ft=vim:
+"
+" 2014/09/17 ryo
+" option configures
+"
+" see => :tab h encoding
+"---------------------------------
+
+" vim's encoding
+set encoding=utf-8

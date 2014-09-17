@@ -7,9 +7,6 @@
 " see => https://github.com/tenshiPure/scenario-editor
 "---------------------------------
 
-" extends base configure file
-source /usr/share/vim/vimrc
-
 " this file's path
 let $rc = '/vagrant/src/scenariorc.vim'
 
@@ -37,11 +34,7 @@ source $plugins_help/main
 source $plugins_asp/src/main
 
 " import filer plugin only enable python
-if has('python')
-	source $plugins_filer/src/main
-else
-	echo "filer plugin does't work this vim"
-endif
+source $plugins_filer/src/main
 
 " import fub configure files
 source $autocommands/encoding
@@ -51,6 +44,7 @@ source $maps/vim
 source $maps/normal
 source $maps/insert
 source $maps/visual
+source $options/encoding
 source $options/layout
 source $variables/paths
 
